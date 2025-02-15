@@ -1,24 +1,48 @@
-import axios from "axios";
+"use server";
+import { JobOpening } from "@/types/types";
+import { ExaDrive } from "exadrive-sdk";
 
-export async function uploadJSONToExaDrive(jsonObject: any, address: string): Promise<any> {
+const exaDrive = new ExaDrive(
+  process.env.EXADRIVE_APP_ID!,
+  process.env.EXADRIVE_API_KEY!
+);
+
+export async function uploadJSONToExaDrive(
+  jsonObject: JobOpening,
+): Promise<{ success: boolean; virtualPath : string}> {
+  console.log("json Object got in Upload Fxn", jsonObject);
   try {
     const jsonString = JSON.stringify(jsonObject);
 
-    // Create a Blob object (or File object) with the JSON string
     const jsonFile = new Blob([jsonString], { type: "application/json" });
 
-    // Optional: If you want to name the file (useful for APIs expecting file uploads)
-    const fileWithFileName = new File([jsonFile], "data.json", { type: "application/json" });
+    const file = new File([jsonFile], `data.json`, {
+      type: "application/json",
+    });
+    const virtualDirectoryPath = `/jobOpening${jsonObject._id}`;
+    console.log("virtual directory path", virtualDirectoryPath);
+    const arrayBuffer = await file.arrayBuffer();
+    const fileBuffer = Buffer.from(arrayBuffer);
 
-    const formData = new FormData();
-    formData.append("file", fileWithFileName);
-    const virtualDirectoryPath = `/userData/walletAddress${address ? "/" + address : ""}`;
-    formData.append("virtualDirectoryPath", virtualDirectoryPath);
+    const originalFileName = file.name;
+    const mimeType = file.type;
 
-    const response = await axios.post("/api/uploadToExaDrive", formData);
-    return response.data;
+    const uploadResponse = await exaDrive.uploadFileWithBuffer(
+      fileBuffer,
+      originalFileName,
+      mimeType,
+      virtualDirectoryPath
+    );
+
+    const trx_data = uploadResponse;
+    console.log("trxData", trx_data.status);
+
+    return {
+      success: trx_data.status == 200,
+      virtualPath: trx_data.data.virtualPath,
+    };
   } catch (error) {
-    console.error("Error uploading image:", error);
+    console.error("Error uploading Job Opening:", error);
     throw error;
   }
 }

@@ -17,6 +17,7 @@ const wagmiConfig = getDefaultConfig({
     ssr: true,
 });
 
+
 const WagmiWrapper = ({ children }: {children : ReactNode}) => {
     return (
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
@@ -24,7 +25,9 @@ const WagmiWrapper = ({ children }: {children : ReactNode}) => {
                 <QueryClientProvider client={queryClient}>
                     <RainbowKitProvider coolMode>
                         <Navbar />
-                        {children}
+                        <div className='px-32'>
+                            {children}
+                        </div>
                     </RainbowKitProvider>
                 </QueryClientProvider>
             </WagmiProvider>

@@ -3,7 +3,7 @@
         "inputs": [
             {
                 "internalType": "string",
-                "name": "_listingContent",
+                "name": "_openingURL",
                 "type": "string"
             }
         ],
@@ -42,7 +42,7 @@
             {
                 "indexed": false,
                 "internalType": "string",
-                "name": "listingContent",
+                "name": "openingURL",
                 "type": "string"
             },
             {
@@ -108,7 +108,7 @@
                 "components": [
                     {
                         "internalType": "string",
-                        "name": "listingContent",
+                        "name": "openingURL",
                         "type": "string"
                     },
                     {
@@ -139,7 +139,7 @@
                 "components": [
                     {
                         "internalType": "string",
-                        "name": "listingContent",
+                        "name": "openingURL",
                         "type": "string"
                     },
                     {
@@ -168,7 +168,7 @@
         "outputs": [
             {
                 "internalType": "string",
-                "name": "listingContent",
+                "name": "openingURL",
                 "type": "string"
             },
             {

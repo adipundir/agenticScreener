@@ -7,7 +7,7 @@ export const DownloadJsonFromExadrive = async (
   const openingsData: JobOpening[] = await Promise.all(
     jobOpeningsArray.map(async (jobOpening) => {
       const { data } = await axios.get(
-        `https://builder-lattice.exadrivecdn.com/jobOpening/${jobOpening.openingURL}.json`
+        `https://agentic-screener.exadrivecdn.com${jobOpening.openingURL}/data.json`
       );
       return data;
     })

@@ -12,6 +12,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Avatar, AvatarImage } from './ui/avatar'
 import { useContractInteraction } from '@/hooks/useContractInteractions'
 import { DownloadJsonFromExadrive } from '@/UtilityFunctions/DownloadJSONFromExadrive'
+import { JobOpeningContract } from '@/types/types'
 
 const routes = [
     { path: '/openings', label: 'Job Openings', value: 'openings' },
@@ -23,17 +24,32 @@ export default function Navbar() {
     const { isConnected, address } = useAccount()
     const jobOpenings = useJobOpeningsStore((state : any) => state.jobOpenings);
     const setJobOpenings = useJobOpeningsStore((state : any) => state.setJobOpenings);
+    const myPostingsCount = useJobOpeningsStore((state: any) => state.myPostingsCount);
+    const setMyPostingsCount = useJobOpeningsStore((state: any) => state.setMyPostingsCount);
     const { allJobOpenings } = useContractInteraction()
 
     useEffect(() => {
         (async () => {
+            if (allJobOpenings)
             console.log("All openings from contract", allJobOpenings)
+        
             if (allJobOpenings && allJobOpenings.length > 0){
-                const openings = await DownloadJsonFromExadrive(allJobOpenings)
-                setJobOpenings(openings);
+                const _myPostingsCount = allJobOpenings.filter((job: JobOpeningContract) => job.poster === address).length;                const openingsData = await DownloadJsonFromExadrive(allJobOpenings)
+                console.log("openings Data", openingsData)
+                setMyPostingsCount(_myPostingsCount)
+                setJobOpenings(openingsData);
             }
         })();
-    }, []);
+    }, [allJobOpenings]);
+
+    useEffect(() => {
+        if (jobOpenings.length > 0)
+        console.log("job openings in useEffect", jobOpenings)
+    },[jobOpenings])
+    useEffect(() => {
+        console.log("My Postings Count in useEffect", myPostingsCount)
+    },[jobOpenings])
+
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-background border-b">
@@ -41,7 +57,7 @@ export default function Navbar() {
                 <div className="flex items-center justify-between h-16">
                     <div className="flex-shrink-0">
                         <Link href="/" className="text-2xl font-bold">
-                            URA
+                            AGENTIC SCREENER
                         </Link>
                     </div>
                     <div className="flex items-center space-x-4 min-w-60">

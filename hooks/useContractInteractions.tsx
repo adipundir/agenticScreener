@@ -26,8 +26,8 @@ export const useContractInteraction = () => {
     const { data: allJobOpenings } = useReadContract({
         abi,
         address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
-        functionName: 'getUser',
-        args: [address as Address],
+        functionName: 'getAllJobListings',
+        args: [],
         query: {
             enabled: !!address,
         },
