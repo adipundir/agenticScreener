@@ -16,7 +16,7 @@ import { JobOpeningContract } from '@/types/types'
 
 const routes = [
     { path: '/openings', label: 'Job Openings', value: 'openings' },
-    { path: '/tnc', label: 'T&C', value: 'privacy' },
+    // { path: '/tnc', label: 'T&C', value: 'privacy' },
 ]
 
 export default function Navbar() {

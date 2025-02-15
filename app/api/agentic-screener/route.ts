@@ -189,7 +189,7 @@ export async function POST(request: NextRequest) {
             companyName: job.companyName,
           });
           const { data, error } = await resend.emails.send({
-            from: "Universal Recruiter <onboarding@resend.dev>",
+            from: "Agentic Screener <onboarding@resend.dev>",
             to: [candidateDetails.candidateEmail],
             subject: `You're In! Our Recruiter Will Contact You Soon - ${job.companyName}`,
             react: emailHtml,
@@ -208,7 +208,7 @@ export async function POST(request: NextRequest) {
             companyName: job.companyName,
           });
           const { data, error } = await resend.emails.send({
-            from: "Universal Recruiter <onboarding@resend.dev>",
+            from: "Agentic Screener <onboarding@resend.dev>",
             to: [candidateDetails.candidateEmail],
             subject: "Thank You for Applying – Update on Your Application",
             react: emailHtml,
