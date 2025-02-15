@@ -10,6 +10,8 @@ import useJobOpeningsStore from '@/Zustand/JobOpeningsStore'
 import { useEffect } from 'react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Avatar, AvatarImage } from './ui/avatar'
+import { useContractInteraction } from '@/hooks/useContractInteractions'
+import { DownloadJsonFromExadrive } from '@/UtilityFunctions/DownloadJSONFromExadrive'
 
 const routes = [
     { path: '/openings', label: 'Job Openings', value: 'openings' },
@@ -21,13 +23,15 @@ export default function Navbar() {
     const { isConnected, address } = useAccount()
     const jobOpenings = useJobOpeningsStore((state : any) => state.jobOpenings);
     const setJobOpenings = useJobOpeningsStore((state : any) => state.setJobOpenings);
-
+    const { allJobOpenings } = useContractInteraction()
 
     useEffect(() => {
         (async () => {
-            const _JobOpenings = await getAllJobOpenings();
-            console.log("All openings",_JobOpenings)
-            setJobOpenings(_JobOpenings);
+            console.log("All openings from contract", allJobOpenings)
+            if (allJobOpenings && allJobOpenings.length > 0){
+                const openings = await DownloadJsonFromExadrive(allJobOpenings)
+                setJobOpenings(openings);
+            }
         })();
     }, []);
 
