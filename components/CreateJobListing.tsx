@@ -14,6 +14,7 @@ import { uploadJSONToExaDrive } from "@/UtilityFunctions/UploadJSONToExadrive"
 import { useAccount } from "wagmi"
 import { Dispatch, SetStateAction } from "react"
 import { useContractInteraction } from "@/hooks/useContractInteractions"
+import { getFormattedDate } from "@/UtilityFunctions/GetFormattedDate"
 
 const formSchema = z.object({
     companyName: z.string().min(2, { message: "Company name must be at least 2 characters." }),
@@ -56,7 +57,7 @@ export default function CreateJobListing({ setIsOpen }: CreateJobListingProps) {
             ...values,
             _id: `/${address}/${myPostingsCount + 1}`,
             recruiterId: address as string,
-            postedDate: JSON.stringify((new Date()).getDate()),
+            postedDate: JSON.stringify(getFormattedDate()),
             isAccepting: "true",
             candidatesData: []
         }

@@ -35,7 +35,7 @@ export async function uploadJSONToExaDrive(
     );
 
     const trx_data = uploadResponse;
-    console.log("trxData", trx_data.status);
+    console.log("trxData", trx_data.data);
 
     return {
       success: trx_data.status == 200,
