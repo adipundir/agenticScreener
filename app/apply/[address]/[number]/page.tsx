@@ -6,6 +6,7 @@ import useJobOpeningsStore from "@/Zustand/JobOpeningsStore";
 import { Button } from "@/components/ui/button";
 import pdfToText from 'react-pdftotext'
 import { toast } from "sonner";
+import resumeScreeningAgent from "@/UtilityFunctions/ResumeScreeningAgent";
 import useLoadingStore from "@/Zustand/LoadingStore";
 import { IconSquareRoundedX } from "@tabler/icons-react";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
@@ -47,7 +48,8 @@ export default function Apply() {
 
         setIsLoading(true);
         try {
-
+            const result = await resumeScreeningAgent(pdfText, relevantOpening);
+            toast(result);
         } catch (error) {
             console.error("Error processing resume:", error);
             toast.error("Error processing resume.");
