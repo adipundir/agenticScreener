@@ -10,7 +10,7 @@ import { CopyButton } from "@/components/ui/copy-button"
 import { MessageInput } from "@/components/ui/message-input"
 import { MessageList } from "@/components/ui/message-list"
 import { PromptSuggestions } from "@/components/ui/prompt-suggestions"
-import { useAutoScroll } from "@/Hooks/use-auto-scroll"
+import { useAutoScroll } from "@/hooks/use-auto-scroll"
 // import { useAutoScroll } from "@/src/components/ui/chat/hooks/useAutoScroll"
 
 interface ChatPropsBase {
